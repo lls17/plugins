@@ -1,0 +1,48 @@
+.clearfix:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.plu_tipBox{
+	position: absolute;
+	background: #fff;
+	font-size: 18px;
+	text-align: center;
+    border-radius: 10px;
+    z-index: 100;
+}
+.plu_mask{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.5;
+	left: 0;
+	top: 0;
+	z-index: 99;
+}
+.plu_tipBox .plu_dialog_title {
+    font-weight: normal;
+    font-size: 20px;
+    height: 59px;
+    line-height: 59px;
+    margin: 0;
+    border-bottom: 1px solid #bfbfbf;
+}
+.plu_tipBox .plu_content, .plu_tipBox .plu_btnGroup {
+	padding: 20px 40px;
+}
+.plu_tipBox .plu_btnGroup {
+    word-spacing: 20px;
+}
+
+.plu_tipBox .plu_btnGroup .plu_btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    line-height: 30px;
+    text-align: center;
+    background: #B70C15;
+    padding: 0 20px;
+    border-radius: 10px;
+}
