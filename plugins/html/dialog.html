@@ -6,6 +6,7 @@
 	</head>
 	<body>
 		<input type="button" id="btn_layer" value="蒙层弹窗" />
+		<input type="button" id="btn_die" value="限时弹窗" />
 		
 		<script src="../lib/jq.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../dialog/js/dialog.js" type="text/javascript" charset="utf-8"></script>
@@ -20,6 +21,12 @@
 							'confirm': function(){return true},
 							'cancel': function(){return true}
 						}
+					});
+				});
+				
+				$("#btn_die").on("click", function(){
+					$.dialogDie({
+						
 					});
 				});
 		</script>

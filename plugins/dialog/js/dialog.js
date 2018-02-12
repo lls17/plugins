@@ -1,8 +1,14 @@
 ;(function(){
 	/*
-	 * 弹窗 
+	 * 蒙层弹窗 
 	 *   ① 按钮 “名称-方法” 定制
-	 * 	
+	 * 	 ② 弹窗定位（默认居中）
+	 *   ③ 窗口缩放时，弹窗居中归位
+	 * 改进
+	 *   ① 当弹窗内容区域过长时，将不可见
+	 *     —— 定高，加滚轮
+	 *   ② 当内容区变宽时，整个弹窗宽度随变
+	 *     —— minWidth
 	 * */
 	//1、声明对象
 	function Dialog(options){
@@ -167,5 +173,62 @@
 		 *    new用来创建对象/实例的函数，构造函数
 		 * */
 		new Dialog(options);
+	}
+	
+	/*
+	 * 状态弹窗，2s后消失
+	 * ① 可以设置不同提示框的颜色
+	 * */
+	function DialogDie(options){
+		options = options || {};
+		if(options.constructor !== Object){
+			options = {};
+		}
+		
+		this.defaults = {
+	        title: "标题",
+	        type: "info",
+	        cb: function(){}
+	    };
+	    $.extend(this.defaults, options);
+	    
+	    this.init();
+	}
+	DialogDie.prototype = {
+		constructor: DialogDie,
+		init: function(){
+			this.diaDiv = this.createHTML();
+	        this.center();
+	        this.closed();
+		},
+		createHTML: function() {
+	        var diaDiv = $("<div></div>");
+	        diaDiv.attr("id", "plu_info");
+	        var bg = this.defaults.type=="err"?"#ea1f26":"#3363fb";
+	        diaDiv.css({ "position": "absolute", "background": bg, "display":"none" });
+	        diaDiv.html(this.defaults.title);
+	        $("body").append(diaDiv);
+	        return diaDiv;
+	    },
+	    center: function() {
+	        var _this = this;
+	        $(_this.diaDiv).css({
+	            left: ($(document).width() - $(_this.diaDiv).outerWidth()) / 2 + "px",
+	            top: $(document).scrollTop() + ($(window).height() - $(_this.diaDiv).outerHeight()) / 2 + "px",
+	        });
+	        $(_this.diaDiv).slideDown(200);
+	    },
+	    closed: function() {
+	    	var _this = this;
+	        setTimeout(function(){
+	        	$(_this.diaDiv).slideUp(200, function(){
+	        		$(_this.diaDiv).remove();
+	        		_this.defaults.cb();
+	        	});
+	        },2000);
+	    }
+	};
+	$.dialogDie = function(options){
+		new DialogDie(options);
 	}
 })();
